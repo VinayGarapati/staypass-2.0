@@ -1,0 +1,73 @@
+{
+  "id": "/",
+  "name": "StayPass - Verified PG & Hostel Bed Request",
+  "short_name": "StayPass",
+  "description": "Verified PG and hostel bed reservation platform for Hyderabad and Rajahmundry with real-time room bed matrix and transparent pricing.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#0052AC",
+  "background_color": "#151C27",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["lifestyle", "travel", "business", "housing"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Beds",
+      "short_name": "Search",
+      "description": "Explore verified PG and hostel beds in Hyderabad & Rajahmundry",
+      "url": "/?tab=search",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Bookings",
+      "short_name": "Bookings",
+      "description": "View active bed reservations and digital check-in pass",
+      "url": "/?tab=bookings",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Warden Portal",
+      "short_name": "Warden",
+      "description": "Manage PG rooms, bed inventory, and resident check-ins",
+      "url": "/?role=PG_HOSTEL_OWNER",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.staypass.app",
+      "id": "com.staypass.app"
+    }
+  ]
+}

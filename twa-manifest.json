@@ -1,0 +1,56 @@
+{
+  "packageId": "com.staypass.app",
+  "host": "ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app",
+  "name": "StayPass - Verified PG & Hostel Bed Request",
+  "launcherName": "StayPass",
+  "display": "standalone",
+  "themeColor": "#0052AC",
+  "themeColorDark": "#151C27",
+  "navigationColor": "#151C27",
+  "navigationColorDark": "#151C27",
+  "navigationDividerColor": "#0052AC",
+  "navigationDividerColorDark": "#0052AC",
+  "backgroundColor": "#151C27",
+  "enableNotifications": true,
+  "startUrl": "/?source=playstore",
+  "iconUrl": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/pwa-512x512.png",
+  "maskableIconUrl": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/pwa-maskable-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "staypass-play"
+  },
+  "appVersionCode": 1,
+  "appVersionName": "1.0.0",
+  "shortcuts": [
+    {
+      "name": "Search Beds",
+      "shortName": "Search",
+      "url": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/?tab=search",
+      "chosenIconUrl": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/pwa-192x192.png"
+    },
+    {
+      "name": "My Bookings",
+      "shortName": "Bookings",
+      "url": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/?tab=bookings",
+      "chosenIconUrl": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/pwa-192x192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false
+}

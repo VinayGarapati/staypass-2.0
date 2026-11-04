@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.staypass.app",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:7F:05:2F:B7:61:CE:E5:F6:12:6C:E6:E7:0F:21:A3:11:16:40:54:1A:59:E1:9F:32:5A:F8:94:49:40",
+        "E4:58:3B:4D:15:2B:B3:68:57:95:90:5B:CD:00:DF:1F:B5:4C:E3:44:A2:3B:56:6B:A2:65:B2:A9:6D:19:93:86"
+      ]
+    }
+  }
+]

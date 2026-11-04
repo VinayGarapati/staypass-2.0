@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.staypass.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.staypass.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+            hostName: "ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app",
+            defaultUrl: "https://ais-pre-vourwj6k5sgolnsm5esgqp-972183861183.asia-east1.run.app",
+            assetStatements: '[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "android_app", "package_name": "com.staypass.app", "sha256_cert_fingerprints": ["14:6D:E9:7F:05:2F:B7:61:CE:E5:F6:12:6C:E6:E7:0F:21:A3:11:16:40:54:1A:59:E1:9F:32:5A:F8:94:49:40"] }}]'
+        ]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StayPass - Offline</title>
+    <meta name="theme-color" content="#0052AC" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+      body {
+        background-color: #151C27;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 24px;
+        text-align: center;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 32px 24px;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+      .icon-box {
+        width: 72px;
+        height: 72px;
+        background: linear-gradient(135deg, #0052AC, #246BCE);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        box-shadow: 0 8px 16px rgba(0, 82, 172, 0.3);
+      }
+      .icon-box svg {
+        width: 36px;
+        height: 36px;
+        stroke: #ffffff;
+      }
+      h1 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      p {
+        color: #C2C6D5;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+      }
+      .retry-btn {
+        background: #246BCE;
+        color: #ffffff;
+        border: none;
+        padding: 12px 28px;
+        border-radius: 14px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(36, 107, 206, 0.4);
+      }
+      .retry-btn:hover {
+        background: #1B54A6;
+        transform: translateY(-1px);
+      }
+      .offline-badge {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 4px 12px;
+        background: rgba(147, 247, 186, 0.1);
+        border: 1px solid rgba(147, 247, 186, 0.3);
+        border-radius: 20px;
+        color: #93F7BA;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+          <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+          <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+          <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+          <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+      </div>
+      <h1>You're Currently Offline</h1>
+      <p>StayPass cannot connect to the server right now. Your previously cached bookings and digital check-in passes remain safe on your device.</p>
+      <button class="retry-btn" onclick="window.location.reload()">
+        <span>Reconnect</span>
+      </button>
+      <div>
+        <span class="offline-badge">StayPass PWA Offline Protection</span>
+      </div>
+    </div>
+  </body>
+</html>

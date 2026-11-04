@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "Property": {
+      "title": "Property",
+      "description": "PG, Hostel or Coliving property registered in StayPass",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "name": { "type": "string" },
+        "gender": { "type": "string", "enum": ["MALE_ONLY", "FEMALE_ONLY"] },
+        "city": { "type": "string" },
+        "locality": { "type": "string" },
+        "totalBeds": { "type": "number" },
+        "availableBeds": { "type": "number" }
+      },
+      "required": ["id", "ownerId", "name", "gender", "city"]
+    },
+    "Floor": {
+      "title": "Floor",
+      "description": "Building floor inside a property",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "propertyId": { "type": "string" },
+        "floorName": { "type": "string" },
+        "floorNumber": { "type": "number" }
+      },
+      "required": ["id", "propertyId", "floorName"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "Accommodation room on a floor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "propertyId": { "type": "string" },
+        "roomNumber": { "type": "string" },
+        "sharingType": { "type": "string" },
+        "monthlyPrice": { "type": "number" },
+        "dailyPrice": { "type": "number" }
+      },
+      "required": ["id", "propertyId", "roomNumber", "sharingType"]
+    },
+    "Bed": {
+      "title": "Bed",
+      "description": "Individual bed cot inside a room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "roomId": { "type": "string" },
+        "code": { "type": "string" },
+        "status": { "type": "string", "enum": ["VACANT", "BOOKED", "OCCUPIED", "MAINTENANCE", "BLOCKED"] },
+        "monthlyPrice": { "type": "number" }
+      },
+      "required": ["id", "code", "status"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Customer booking reservation for a bed",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "propertyId": { "type": "string" },
+        "bedId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "status": { "type": "string" },
+        "checkInDate": { "type": "string" }
+      },
+      "required": ["id", "propertyId", "bedId", "customerId", "status"]
+    }
+  },
+  "firestore": {
+    "/properties/{propertyId}": {
+      "schema": "Property",
+      "description": "Root collection of registered StayPass properties"
+    },
+    "/properties/{propertyId}/floors/{floorId}": {
+      "schema": "Floor",
+      "description": "Floors inside a property"
+    },
+    "/properties/{propertyId}/rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Rooms inside a property"
+    },
+    "/properties/{propertyId}/rooms/{roomId}/beds/{bedId}": {
+      "schema": "Bed",
+      "description": "Individual bed cots in a room"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "All customer bookings and reservations"
+    }
+  }
+}

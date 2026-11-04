@@ -1,0 +1,6 @@
+{
+  "name": "StayPass",
+  "description": "Verified PG and hostel bed reservation platform for Hyderabad and Rajahmundry with real-time room bed matrix and transparent pricing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

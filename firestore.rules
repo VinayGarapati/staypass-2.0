@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && request.auth.token.email == 'garapativinay2001@gmail.com';
+    }
+
+    // Properties: public read for verified listings; owner or Super Admin write
+    match /properties/{propertyId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthenticated();
+
+      match /floors/{floorId} {
+        allow read: if true;
+        allow write: if isAuthenticated();
+      }
+
+      match /rooms/{roomId} {
+        allow read: if true;
+        allow write: if isAuthenticated();
+
+        match /beds/{bedId} {
+          allow read: if true;
+          allow write: if isAuthenticated();
+        }
+      }
+    }
+
+    // Bookings: customer or property warden access
+    match /bookings/{bookingId} {
+      allow read, create, update: if isAuthenticated();
+      allow delete: if isSuperAdmin();
+    }
+
+    // Security audit logs & inspections: restricted to Super Admin
+    match /audit_logs/{logId} {
+      allow read: if isSuperAdmin();
+      allow create: if isAuthenticated();
+    }
+
+    match /inspections/{inspectionId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+  }
+}

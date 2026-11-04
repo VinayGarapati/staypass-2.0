@@ -1,0 +1,1223 @@
+Use the following prompt in Google AI Studio with your existing StayPass React Native project. It instructs the AI to implement the features in the actual codebase, preserve your existing design, and connect the screens to the backend and database.
+
+# StayPass – Complete Room & Bed Management, Owner Registration, Super Admin, Customer Booking and Verification Implementation
+
+Act as a senior full-stack mobile application developer, backend architect, database engineer, UI/UX specialist and application security engineer.
+
+I already have an existing **StayPass React Native application**. I want you to inspect the complete existing project and implement the features below directly into the current codebase.
+
+**Do not create a separate demo application. Do not replace my existing design. Do not remove existing functionality.** Extend the current application while preserving its design system, navigation, components, colors, typography and existing customer experience.
+
+The application must support three roles inside one mobile app:
+
+1. Customer
+2. PG/Hostel Owner
+3. Super Admin
+
+The application must work on Android and iOS.
+
+---
+
+# PHASE 1 – PROJECT INSPECTION AND ARCHITECTURE
+
+Before implementing anything:
+
+1. Inspect the current project structure, package dependencies, navigation, authentication, screens, API services and existing backend.
+2. Identify the current database and existing data models.
+3. Reuse existing components and services wherever possible.
+4. Identify incomplete screens, non-functional buttons, mock data and missing API integrations.
+5. Prepare a clear implementation plan.
+6. Implement the features in the existing architecture rather than unnecessarily rewriting the project.
+
+Preferred architecture, if the current project does not already have an equivalent:
+
+**Mobile application**
+
+- React Native
+- Expo
+- TypeScript
+- Expo Router
+- Secure token storage
+- React Query or an equivalent API-state management solution
+
+**Backend**
+
+- Python Django
+- Django REST Framework
+- PostgreSQL
+- Redis and Celery where required
+- Docker and Docker Compose
+- Secure image/document storage
+- REST APIs
+
+Use the existing backend if it is already implemented and suitable. Do not create duplicate systems.
+
+# PHASE 2 – THREE ROLE-BASED PORTALS
+
+Implement three separate role-based experiences inside the same mobile application.
+
+## A. Customer portal
+
+Customers should be able to:
+
+- Register and log in using their mobile number and OTP.
+- Discover PGs, hostels and co-living properties.
+- Search by city, locality and property name.
+- Use Near Me to find properties around their current location.
+- Select a search radius.
+- Select check-in and check-out dates.
+- Search daily or monthly accommodation.
+- Filter male-only and female-only properties.
+- View property images, room images and individual bed availability.
+- View the number of floors, rooms and beds.
+- View available beds for selected dates.
+- View prices, amenities, rules and location.
+- Book one bed or multiple beds.
+- Invite friends to join a group booking.
+- Complete identity verification when required.
+- Upload review images and write reviews after a completed stay.
+- View booking status and notifications.
+
+## B. PG/Hostel Owner portal
+
+Owners should be able to:
+
+- Log in only after receiving an Owner ID from Super Admin.
+- Authenticate using Owner ID, password and Google Authenticator OTP.
+- Manage their registered properties.
+- Add and manage floors.
+- Add and manage rooms.
+- Add, remove and update individual beds.
+- Upload property, floor, room, bed and amenity images.
+- Update property rules and regulations.
+- Manage daily and monthly pricing.
+- View bookings and guest details permitted for their property.
+- Check guests in and out.
+- Update bed availability.
+- View customer reviews.
+- Write reviews about customers after completed stays.
+- View property and occupancy analytics.
+
+Owners must only access properties assigned to their own account.
+
+## C. Super Admin portal
+
+Super Admin must be the highest-privilege role.
+
+Super Admin should be able to:
+
+- Register PGs and hostels.
+- Register and approve owners.
+- Issue unique Owner IDs.
+- Send Owner IDs to registered owner mobile numbers.
+- Manage all registered properties.
+- View all registered customers.
+- View property floors, rooms and individual beds.
+- View property images and verification status.
+- View and manage bookings.
+- View customer and owner reviews.
+- Manage identity verification requests with restricted access.
+- Manage complaints and reports.
+- View overall platform analytics.
+- Suspend or deactivate owners and properties.
+- Maintain an audit history of important actions.
+
+Only Super Admin can issue Owner IDs.
+
+---
+
+# PHASE 3 – SUPER ADMIN REGISTRATION AND SECURE LOGIN
+
+My Super Admin account must be restricted to the following email address:
+
+[**garapativinay2001@gmail.com**](mailto:garapativinay2001@gmail.com)
+
+Implement the Super Admin account securely.
+
+Requirements:
+
+1. Do not provide public Super Admin registration.
+2. Create the initial Super Admin account through a protected backend provisioning process or secure one-time setup command.
+3. The configured email address must be the only account authorized for the initial Super Admin role.
+4. Super Admin login must require email verification using a one-time OTP sent to the registered email address.
+5. OTP must expire after a short configurable period.
+6. Add resend OTP with rate limiting.
+7. Prevent brute-force attempts and repeated OTP abuse.
+8. Use a configured email provider through backend environment variables.
+9. Never hardcode email provider passwords, API keys or OTP secrets in the mobile application.
+10. Add secure logout and session expiration.
+
+If email delivery is not configured, show a clear configuration error. Do not display a fake successful OTP message.
+
+Super Admin must be the only person who can create and issue Owner IDs.
+
+# PHASE 4 – PG/HOSTEL OWNER REGISTRATION AND OWNER ID
+
+Implement the complete owner registration process.
+
+### Owner registration form
+
+Collect:
+
+- Owner full name
+- Registered mobile number
+- Email address
+- Property name
+- Property type
+- Property location
+- Property address
+- Number of floors
+- Property gender policy
+- Supporting registration documents where applicable
+- Owner contact details
+
+Property types:
+
+- PG
+- Hostel
+- Co-living
+
+Gender policies:
+
+- Male-only
+- Female-only
+
+There must be no mixed-gender PG, hostel or co-living accommodation.
+
+### Registration and approval workflow
+
+1. Owner submits a registration application.
+2. Application is stored in the database.
+3. Super Admin receives the application.
+4. Super Admin reviews the owner and property details.
+5. Super Admin approves or rejects the application.
+6. Only after approval can Super Admin issue an Owner ID.
+7. Generate a unique Owner ID, for example:
+
+   SP-OWN-000001
+8. Send the Owner ID to the verified registered mobile number through a configured SMS provider.
+9. Send a secure account activation link.
+10. The owner uses the activation link to set a password and complete authentication setup.
+
+**Important rules:**
+
+- An owner without an issued Owner ID must not enter the Owner portal.
+- Do not allow owners to generate their own Owner IDs.
+- Do not allow public Owner portal signup to bypass Super Admin approval.
+- An application that is pending approval must only be able to view its application status.
+- Owner IDs must be unique and associated with the approved owner account.
+- Do not send passwords through SMS.
+- Never pretend an SMS was sent when no SMS provider is configured.
+
+# PHASE 5 – GOOGLE AUTHENTICATOR FOR PG OWNERS
+
+Google Authenticator must be required for Owner login.
+
+During account activation:
+
+1. Display instructions to download Google Authenticator.
+2. Provide the official Google Authenticator Play Store and App Store links.
+3. Generate a unique TOTP enrollment secret on the backend.
+4. Generate a QR code for the owner to scan.
+5. Also display a manual setup key that the owner can copy and paste into Google Authenticator.
+6. Ask the owner to enter the six-digit code generated by Google Authenticator.
+7. Verify the code on the backend.
+8. Activate TOTP authentication only after successful verification.
+9. Display confirmation that two-factor authentication has been enabled.
+
+Owner login must require:
+
+- Owner ID
+- Password
+- Six-digit Google Authenticator OTP
+
+Security requirements:
+
+- Use a standard TOTP implementation compatible with Google Authenticator.
+- Store TOTP secrets encrypted on the backend.
+- Never expose the TOTP secret through normal login APIs.
+- Never store the TOTP secret in plain text in the mobile application.
+- Support time-window validation and replay protection.
+- Add a secure account recovery process if an owner loses access to their authenticator.
+- Do not use SMS OTP as a replacement for required Google Authenticator authentication.
+
+# PHASE 6 – ROOM AND FLOOR MANAGEMENT
+
+Create a complete Room and Floor Management section inside the Owner dashboard.
+
+### Owner dashboard summary
+
+Show:
+
+- Total Properties
+- Total Floors
+- Total Rooms
+- Total Beds
+- Vacant Beds
+- Booked Beds
+- Occupied Beds
+- Maintenance Beds
+- Blocked Beds
+
+All numbers must be calculated from backend database records.
+
+### Floor management
+
+Owners must be able to:
+
+- Add a floor.
+- Edit floor details.
+- Delete a floor only when it contains no active bookings or occupied beds.
+- View all rooms on a particular floor.
+- Upload floor images.
+- Add floor descriptions.
+
+Floor fields:
+
+- Floor ID
+- Property ID
+- Floor name or number
+- Building/block name, if applicable
+- Description
+- Images
+- Created date
+
+Example:
+
+- Ground Floor
+- First Floor
+- Second Floor
+- Third Floor
+
+### Room management
+
+Create a Room List screen.
+
+Each room card must display:
+
+- Room number/name
+- Floor
+- Room type
+- Total beds
+- Vacant beds
+- Booked beds
+- Occupied beds
+- Maintenance beds
+- Room images
+- Price per bed
+
+Provide the following actions:
+
+- Add Room
+- Edit Room
+- View Room
+- Add Beds
+- Manage Beds
+- Upload Images
+- Delete Room, subject to booking and occupancy restrictions
+
+### Add Room screen
+
+Fields:
+
+- Select Property
+- Select Floor
+- Room Number
+- Room Name, optional
+- Room Description
+- Room Type
+- Number of Beds
+- Daily Price Per Bed
+- Monthly Price Per Bed
+- Amenities
+- Room Images
+- Room Rules
+
+After creating a room, automatically create the specified individual bed records.
+
+Example:
+
+Room 101:
+
+- 101-A
+- 101-B
+- 101-C
+- 101-D
+
+Each bed must have its own unique database ID.
+
+### Add and remove beds
+
+Owners must be able to:
+
+- Add additional beds to an existing room.
+- Upload photographs for newly added beds.
+- Edit bed information.
+- Update bed pricing where permitted.
+- Mark beds for maintenance.
+- Block beds temporarily.
+- Remove beds when they have no active reservations or occupancy.
+
+Never permanently delete a bed with an active booking, reservation or occupancy.
+
+If a bed has booking history, preserve its history. Use a safe inactive or archived state rather than destroying historical records.
+
+# PHASE 7 – INDIVIDUAL BED STATUS MANAGEMENT
+
+Create a dedicated Bed Management screen.
+
+Display beds using a visual bed layout or grid.
+
+Each bed must show:
+
+- Bed ID
+- Room number
+- Floor
+- Bed image
+- Current status
+- Daily price
+- Monthly price
+- Booking dates, where permitted
+
+Bed statuses:
+
+1. VACANT
+2. BOOKED
+3. OCCUPIED
+4. MAINTENANCE
+5. BLOCKED
+
+Use clear status labels and consistent visual styling.
+
+### Status rules
+
+- VACANT: Available for eligible dates.
+- BOOKED: Has a confirmed future reservation.
+- OCCUPIED: A guest has checked in.
+- MAINTENANCE: Not available for booking.
+- BLOCKED: Owner has temporarily disabled the bed.
+
+Add:
+
+- Check In
+- Check Out
+- Mark Maintenance
+- Block Bed
+- Make Available
+
+Do not allow an occupied bed to become vacant without a valid checkout process.
+
+Do not allow an owner to manually mark a bed as available when a confirmed reservation overlaps the requested dates.
+
+A pending booking request must not automatically be treated as a confirmed booking. If temporary inventory holds are implemented, they must have an explicit expiry.
+
+### Date-wise vacancy calculation
+
+Vacancy must be calculated based on:
+
+- Selected check-in date
+- Selected check-out date
+- Existing confirmed bookings
+- Current occupancy
+- Maintenance periods
+- Blocked periods
+- Bed availability
+
+Do not calculate vacancy using only a static status field.
+
+Use backend date-overlap checks and database transactions to prevent two customers from booking the same bed for overlapping dates.
+
+The backend must be the source of truth for all availability.
+
+# PHASE 8 – DATABASE AND BACKEND INTEGRATION
+
+All customer, owner, property, room, floor, bed, booking and review data must be stored persistently in PostgreSQL.
+
+Do not use local mock arrays as production storage.
+
+Implement database migrations and properly related data models.
+
+Create or extend models for:
+
+- User
+- CustomerProfile
+- OwnerProfile
+- OwnerRegistrationApplication
+- OwnerID
+- SuperAdmin
+- Property
+- PropertyType
+- PropertyGenderPolicy
+- PropertyImage
+- Floor
+- FloorImage
+- Room
+- RoomImage
+- Bed
+- BedImage
+- BedStatusHistory
+- Amenity
+- AmenityImage
+- PropertyAmenity
+- PropertyRule
+- Booking
+- BookingGuest
+- GroupBooking
+- GuestInvitation
+- Reservation
+- CustomerVerification
+- VerificationDocumentMetadata
+- Review
+- ReviewImage
+- OwnerCustomerReview
+- Notification
+- Complaint
+- AuditLog
+- Payment
+- Refund
+
+Use appropriate foreign keys and database relationships.
+
+Add:
+
+- Unique constraints
+- Database indexes
+- Validation
+- Transactions
+- Access-control rules
+- Pagination
+- Search filters
+- Soft deletion where appropriate
+- Audit logs for sensitive operations
+
+### Data retrieval
+
+Customers and authorized owners must be able to fetch actual database information.
+
+Examples:
+
+- PG name
+- Property type
+- Property gender policy
+- City and locality
+- Location coordinates
+- Number of floors
+- Number of rooms
+- Total beds
+- Vacant beds
+- Booked beds
+- Occupied beds
+- Daily and monthly prices
+- Property images
+- Room images
+- Bed images
+- Amenities
+- Rules and regulations
+- Reviews
+- Booking availability
+
+All values must come from actual backend records.
+
+Owners must only retrieve and modify their own property data.
+
+Super Admin can retrieve all platform data according to their authorization.
+
+# PHASE 9 – PROPERTY AND ROOM IMAGE UPLOADS
+
+Owners must be able to upload multiple images.
+
+Support:
+
+1. Property exterior photographs
+2. Property interior photographs
+3. Property location photographs
+4. Floor photographs
+5. Room photographs
+6. Individual bed photographs
+7. Newly added room photographs
+8. Amenity photographs
+9. Bathroom photographs
+10. Common-area photographs
+11. Rules and regulations documents or images
+
+For each image, support:
+
+- Upload
+- Preview
+- Caption
+- Reorder
+- Replace
+- Delete, subject to business rules
+- Upload progress
+- Error handling
+
+Use image compression and generate thumbnails.
+
+Use lazy loading, caching and optimized image sizes for fast loading.
+
+Store property images in appropriate object storage and keep image metadata in PostgreSQL.
+
+Private identity documents must never use publicly accessible image URLs.
+
+# PHASE 10 – CUSTOMER NEAR ME AND DATE-WISE SEARCH
+
+Add a Near Me option to the customer home and search screens.
+
+### Near Me functionality
+
+1. Ask for location permission when the customer uses Near Me.
+2. Retrieve the customer's current location only after permission.
+3. Allow manual location selection if permission is denied.
+4. Provide selectable search radius options:
+   - 1 km
+   - 2 km
+   - 5 km
+   - 10 km
+   - 20 km
+   - Custom radius
+5. Retrieve eligible PGs, hostels and co-living properties within the selected radius.
+6. Show property distance.
+7. Display relevant property images and available beds.
+8. Allow customers to select dates before checking availability.
+
+Use geospatial database queries or an appropriate geospatial indexing solution.
+
+### Search ranking
+
+Rank results using:
+
+- Date-wise bed availability
+- Accommodation gender suitability
+- Selected property type
+- Distance
+- Property verification status
+- Price
+- Relevant amenities
+- Property response quality
+
+Do not show a property as available unless its inventory is actually available for the selected dates.
+
+If location permission is denied, allow customers to search by city, locality or manually selected map location.
+
+# PHASE 11 – MALE-ONLY, FEMALE-ONLY AND CO-LIVING PROPERTIES
+
+Property types:
+
+- Male PG
+- Female PG
+- Male Hostel
+- Female Hostel
+- Male Co-living
+- Female Co-living
+
+Do not support mixed-gender accommodation inside the same property.
+
+Do not allow male and female guests to share the same room or property.
+
+Validate the property's gender policy during owner registration and property creation.
+
+Customer search must show only suitable properties according to the customer's accommodation requirements.
+
+# PHASE 12 – MIXED-GENDER FRIEND GROUP BOOKING
+
+Implement a special feature called **Friends Group Stay**.
+
+Example:
+
+A group of six friends travels to Hyderabad:
+
+- Three male guests
+- Three female guests
+
+They want to stay near each other, but mixed-gender accommodation is not permitted.
+
+### Required system behaviour
+
+1. The organizer selects Friends Group Stay.
+2. The organizer enters the destination.
+3. The organizer selects check-in and check-out dates.
+4. The organizer enters the total number of guests.
+5. The organizer specifies the accommodation requirements for each guest.
+6. The system identifies the required male-only and female-only accommodation.
+7. Search for separate eligible male and female properties.
+8. Search within the customer's selected distance range.
+9. Check that each property has enough available beds for its assigned guests.
+10. Recommend the best matching property combination.
+
+### Same owner with separate properties
+
+If one owner operates two nearby properties:
+
+- One male-only PG
+- One female-only PG
+
+The system should identify both properties and recommend them together when they meet the requirements.
+
+Display:
+
+- Male property name
+- Female property name
+- Distance between the properties
+- Available beds in each property
+- Total estimated price
+- Owner/operator information where appropriate
+- Booking status for each property
+
+### Important restrictions
+
+- Never allocate male and female guests to the same property.
+- Never allocate mixed-gender guests to the same room.
+- Never assume that two properties have availability just because they belong to the same owner.
+- Only show a group combination when both properties have enough matching inventory for the same requested dates.
+- Do not guarantee that friends will stay nearby unless the distance and inventory checks succeed.
+- Show independent booking and confirmation status for each property.
+
+Allow the organizer to compare suitable property combinations before proceeding.
+
+# PHASE 13 – GROUP BOOKING AND FRIEND INVITATION LINKS
+
+If one friend books for multiple people, implement a secure guest invitation system.
+
+### Booking flow
+
+1. Organizer selects a suitable property or property combination.
+2. Organizer adds the number of guests.
+3. Organizer enters basic booking information.
+4. The system creates a group booking.
+5. Generate an individual secure invitation link for each additional guest.
+6. Organizer shares the links with friends.
+7. Each friend opens their own link.
+8. Each friend verifies their mobile number.
+9. Each friend provides the required guest information.
+10. Each friend completes identity verification when required.
+11. Update the group's verification and booking status.
+
+### Guest invitation security
+
+- Each invitation must be unique.
+- Use cryptographically secure random tokens.
+- Links must expire.
+- Links must be linked to the correct booking and guest.
+- Support one-time use or controlled renewal.
+- Do not expose another guest's personal information.
+- Prevent unauthorized users from editing a booking.
+
+Display a group status screen:
+
+- Total Guests
+- Invitations Sent
+- Invitations Accepted
+- Verification Pending
+- Verification Completed
+- Booking Confirmed
+- Booking Pending
+
+The organizer should be able to see each guest's completion status without viewing their private identity documents.
+
+# PHASE 14 – AADHAAR AND OFFLINE IDENTITY VERIFICATION
+
+Implement a secure identity verification workflow for group bookings.
+
+Important: Aadhaar is sensitive personal information. Design this feature to follow applicable Indian law and UIDAI requirements.
+
+Do not assume that the application is authorized to perform direct online UIDAI verification.
+
+### Verification options
+
+Where a lawful and authorized online verification provider is configured, integrate through the provider's official API.
+
+If online verification is unavailable, provide an offline verification option where legally permitted.
+
+Possible offline methods:
+
+- UIDAI-compliant Aadhaar Secure QR verification.
+- Other permitted offline Aadhaar verification methods.
+- Masked Aadhaar document upload where sufficient.
+- Another approved identity document where appropriate.
+
+### Offline upload flow
+
+1. Explain why identity verification is required.
+2. Obtain explicit consent.
+3. Explain how the document will be used and who can access its verification status.
+4. Allow the customer to upload an eligible document using the device camera or gallery.
+5. Allow masking or redaction of Aadhaar numbers where required.
+6. Upload securely to private document storage.
+7. Save verification metadata in PostgreSQL.
+8. Show verification status to authorized users.
+
+### Verification statuses
+
+- NOT_STARTED
+- PENDING
+- SUBMITTED
+- UNDER_REVIEW
+- VERIFIED
+- REJECTED
+- RESUBMISSION_REQUIRED
+
+### Access permissions
+
+Super Admin and the assigned PG owner must be able to see the verification status and only the minimum information needed for their legitimate operational role.
+
+The PG owner must not automatically receive unrestricted access to raw identity documents.
+
+If document access is legally permitted and operationally necessary, provide tightly restricted access with:
+
+- Role-based authorization
+- Private storage
+- Expiring signed URLs
+- Access audit logs
+- Encryption
+- Retention and deletion rules
+
+Do not store full Aadhaar numbers in application logs, analytics or ordinary API responses.
+
+Do not retain identity documents indefinitely.
+
+Provide a configurable retention policy and a secure deletion process.
+
+# PHASE 15 – TWO-WAY REVIEWS
+
+Implement customer-to-property and owner-to-customer reviews.
+
+### Customer reviews property
+
+After a completed stay, the customer can:
+
+- Give a star rating.
+- Write a review.
+- Upload multiple images.
+- Describe cleanliness, facilities, service and overall experience.
+- Submit a complaint or report inappropriate content.
+
+Customer review images must be stored and displayed safely.
+
+### Owner reviews customer
+
+After a completed stay, the owner can:
+
+- Rate the guest.
+- Write feedback about the guest's stay.
+- Submit a review based on legitimate stay-related behaviour.
+
+### Review restrictions
+
+- Reviews must be tied to a genuine completed stay.
+- Owners cannot review people who did not stay at their property.
+- Customers cannot review properties they did not stay at.
+- Prevent duplicate reviews for the same eligible stay.
+- Provide moderation and reporting.
+- Prevent abusive content, threats, discrimination, doxxing and publication of personal information.
+- Provide a dispute or moderation process.
+- Avoid allowing reviews to expose private guest identity information.
+
+# PHASE 16 – OWNER BOOKING AND PROPERTY MANAGEMENT
+
+Owner dashboard must include:
+
+- Overview
+- Properties
+- Floors
+- Rooms
+- Beds
+- Bookings
+- Guests
+- Reviews
+- Amenities
+- Rules and Regulations
+- Images
+- Analytics
+- Profile and Settings
+
+Owners must be able to:
+
+- View incoming booking requests.
+- Accept or reject requests.
+- Confirm reservations.
+- View assigned guests.
+- Check guests in.
+- Check guests out.
+- View upcoming arrivals.
+- View completed stays.
+- View occupancy.
+- View vacant beds by date.
+- Update room and bed photographs.
+- Update permitted prices.
+- Manage amenities and regulations.
+
+All operations must be authorized and persisted through backend APIs.
+
+# PHASE 17 – SUPER ADMIN PROPERTY MANAGEMENT
+
+Create a complete Super Admin property registration and management screen.
+
+Super Admin must be able to:
+
+1. Register a new PG or hostel.
+2. Enter the owner details.
+3. Enter the property details.
+4. Set property type.
+5. Set male-only or female-only policy.
+6. Add property location.
+7. Upload initial property images.
+8. Add floors.
+9. Add rooms.
+10. Add beds.
+11. Assign the property to an approved owner.
+12. Approve or reject the registration.
+13. Issue the Owner ID.
+14. Send the Owner ID through the configured SMS provider.
+15. View all registered properties.
+16. Edit property details.
+17. Suspend or deactivate a property.
+
+Super Admin must be able to view all property details, including:
+
+- PG name
+- Owner name
+- Owner ID
+- Property type
+- Gender policy
+- City and locality
+- Number of floors
+- Number of rooms
+- Number of beds
+- Vacant beds
+- Booked beds
+- Occupied beds
+- Property photographs
+- Amenities
+- Rules
+- Verification status
+- Booking history
+
+# PHASE 18 – NOTIFICATIONS
+
+Implement notifications for:
+
+- Owner application submitted.
+- Owner application approved or rejected.
+- Owner ID issued.
+- Account activation.
+- Booking request received.
+- Booking confirmed or rejected.
+- Guest check-in.
+- Guest check-out.
+- Group invitation sent.
+- Guest verification completed.
+- Identity verification needs attention.
+- Customer review received.
+- Owner review received.
+- Property or document moderation updates.
+
+Use configured email, SMS and push notification providers.
+
+Do not display fake success messages for integrations that are not configured.
+
+# PHASE 19 – API DESIGN
+
+Create or extend secure backend endpoints to support all operations.
+
+Suggested endpoint structure:
+
+**Super Admin**
+
+- POST /api/admin/owners/
+- GET /api/admin/owners/
+- PATCH /api/admin/owners/{id}/approve/
+- PATCH /api/admin/owners/{id}/reject/
+- POST /api/admin/owners/{id}/issue-owner-id/
+- POST /api/admin/properties/
+- GET /api/admin/properties/
+- GET /api/admin/customers/
+- GET /api/admin/bookings/
+- GET /api/admin/verification/
+- PATCH /api/admin/verification/{id}/
+
+**Owner**
+
+- GET /api/owner/dashboard/
+- GET /api/owner/properties/
+- POST /api/owner/properties/
+- GET /api/owner/properties/{id}/floors/
+- POST /api/owner/properties/{id}/floors/
+- PATCH /api/owner/floors/{id}/
+- DELETE /api/owner/floors/{id}/
+- GET /api/owner/floors/{id}/rooms/
+- POST /api/owner/floors/{id}/rooms/
+- PATCH /api/owner/rooms/{id}/
+- DELETE /api/owner/rooms/{id}/
+- GET /api/owner/rooms/{id}/beds/
+- POST /api/owner/rooms/{id}/beds/
+- PATCH /api/owner/beds/{id}/
+- DELETE /api/owner/beds/{id}/
+- PATCH /api/owner/beds/{id}/status/
+- POST /api/owner/beds/{id}/check-in/
+- POST /api/owner/beds/{id}/check-out/
+- POST /api/owner/properties/{id}/images/
+- POST /api/owner/rooms/{id}/images/
+- POST /api/owner/beds/{id}/images/
+- POST /api/owner/reviews/customers/
+
+**Customer**
+
+- GET /api/properties/
+- GET /api/properties/{id}/
+- GET /api/properties/nearby/
+- GET /api/properties/{id}/availability/
+- GET /api/properties/{id}/floors/
+- GET /api/properties/{id}/rooms/
+- GET /api/properties/{id}/beds/
+- POST /api/bookings/
+- GET /api/bookings/
+- POST /api/group-bookings/
+- POST /api/group-bookings/{id}/invitations/
+- POST /api/invitations/{token}/accept/
+- POST /api/verifications/
+- POST /api/reviews/
+- POST /api/reviews/{id}/images/
+
+These are suggested endpoint names. Adapt them to the actual backend architecture and existing routes.
+
+Every endpoint must include appropriate authentication, validation, authorization and error handling.
+
+# PHASE 20 – SECURITY AND DATA PROTECTION
+
+Implement:
+
+- Role-based access control.
+- Secure password hashing.
+- Short-lived access tokens and secure refresh-token handling.
+- OTP expiry and rate limiting.
+- TOTP validation.
+- Owner-property ownership checks.
+- Input validation and sanitization.
+- Secure image upload validation.
+- Private storage for identity documents.
+- Audit logs for administrative and identity-document access.
+- Protection against unauthorized data access.
+- Database transaction protection for bookings.
+- Secure invitation tokens.
+- API permission tests.
+- Dependency vulnerability checks.
+
+Do not hardcode production secrets in source code.
+
+Use environment variables and provide a safe `.env.example`.
+
+Do not claim that the application is completely vulnerability-free. Implement security controls and provide a list of remaining deployment and security-review requirements.
+
+# PHASE 21 – UI/UX AND PERFORMANCE
+
+Preserve the existing StayPass design.
+
+Create or update the following screens where needed:
+
+**Owner screens**
+
+- Owner Login
+- Owner Registration Status
+- Owner Account Activation
+- Google Authenticator Setup
+- Owner Dashboard
+- Property List
+- Property Details
+- Floor List
+- Add Floor
+- Edit Floor
+- Room List
+- Add Room
+- Edit Room
+- Room Details
+- Bed Management
+- Add Bed
+- Edit Bed
+- Bed Status Update
+- Image Upload Manager
+- Amenities
+- Rules and Regulations
+- Booking Management
+- Guest Details
+- Customer Reviews
+- Review Customer
+- Owner Analytics
+
+**Super Admin screens**
+
+- Super Admin Login
+- Email OTP Verification
+- Admin Dashboard
+- Owner Applications
+- Register Owner
+- Register Property
+- Property Management
+- Floor and Room Management
+- Owner ID Issuance
+- Customer Management
+- Booking Management
+- Identity Verification Review
+- Reviews and Reports
+- Audit Logs
+
+**Customer screens**
+
+- Near Me
+- Search Radius Selection
+- Date Selection
+- Property Search Results
+- Property Details
+- Floor and Room Details
+- Bed Availability
+- Friends Group Stay
+- Group Booking
+- Guest Invitation
+- Guest Verification
+- Upload Identity Document
+- Review Property
+- Upload Review Images
+
+Make sure every button and interaction works.
+
+Do not leave decorative buttons that do nothing.
+
+Include:
+
+- Loading states
+- Empty states
+- Error states
+- Success messages
+- Form validation
+- Confirmation dialogs
+- Network retry handling
+- Responsive layouts
+- Accessible controls
+- Fast image loading
+- Image caching
+- Thumbnail previews
+- Pagination or lazy loading where appropriate
+
+# PHASE 22 – TESTING AND ACCEPTANCE CRITERIA
+
+Implement automated tests and provide a manual testing checklist.
+
+### Owner registration and login
+
+- A new owner cannot access the Owner portal without an issued Owner ID.
+- Super Admin can approve an owner.
+- Super Admin can issue a unique Owner ID.
+- The configured SMS provider sends the Owner ID or activation message.
+- Owner can activate an account.
+- Owner can enroll Google Authenticator.
+- Owner login requires Owner ID, password and valid TOTP.
+- An invalid or expired OTP is rejected.
+
+### Room and bed management
+
+- Owner can add a floor.
+- Owner can add rooms to a floor.
+- Owner can add beds.
+- Owner can remove eligible beds.
+- Owner cannot delete a bed with an active booking.
+- Owner can upload room and bed photographs.
+- Owner can update bed statuses.
+- Dashboard counts match database records.
+- Vacancy is calculated correctly for the selected dates.
+
+### Customer and booking
+
+- Customer can search by location.
+- Customer can use Near Me.
+- Customer can select a search radius.
+- Customer can select dates.
+- Customer can view actual vacant beds.
+- Customer cannot book an unavailable bed.
+- Concurrent requests cannot create overlapping confirmed bookings.
+
+### Gender and group booking
+
+- Male-only properties are correctly identified.
+- Female-only properties are correctly identified.
+- Co-living properties have a gender policy.
+- Mixed-gender accommodation is never offered.
+- A mixed-gender friend group can receive suitable separate property recommendations.
+- Both properties must have enough available beds.
+- Distances and booking statuses are displayed accurately.
+
+### Identity verification
+
+- Guest invitations are secure and expire.
+- Each guest can submit their own verification.
+- Offline verification is available where permitted.
+- Identity documents are stored privately.
+- Unauthorized users cannot access identity documents.
+- Verification status is correctly displayed.
+
+### Reviews
+
+- Customers can review completed stays.
+- Customers can upload review images.
+- Owners can review customers after completed stays.
+- Duplicate and unauthorized reviews are prevented.
+
+### Database
+
+- Customer data persists after logout and restart.
+- Owner data persists after logout and restart.
+- Property data persists after logout and restart.
+- Floors, rooms and beds persist after logout and restart.
+- Images remain available through the configured storage system.
+- Search results use real database records, not mock data.
+
+# PHASE 23 – FINAL IMPLEMENTATION DELIVERABLES
+
+After implementation, provide:
+
+1. Summary of all features implemented.
+2. Updated project folder structure.
+3. All new and modified screens.
+4. Database models and migrations.
+5. Backend APIs.
+6. Authentication implementation.
+7. Google Authenticator setup and login flow.
+8. Super Admin registration and Owner ID issuance flow.
+9. Image upload and storage implementation.
+10. Near Me and date-wise availability implementation.
+11. Friends Group Stay implementation.
+12. Identity verification implementation.
+13. Review implementation.
+14. `.env.example` with required configuration variables.
+15. Docker Compose configuration if the backend uses Docker.
+16. Commands to install dependencies and run the application.
+17. Commands to run database migrations.
+18. Automated test results.
+19. Any integrations that still need credentials or provider approval.
+20. Any incomplete items or known limitations.
+
+## FINAL DEVELOPMENT INSTRUCTIONS
+
+- Work on my existing StayPass project.
+- Do not merely provide sample code or a tutorial.
+- Actually create and modify the required files.
+- Preserve the current UI design and existing features.
+- Do not replace real backend integration with mock data.
+- Do not fabricate successful SMS, email, OTP or Aadhaar verification.
+- Do not allow unauthorized Owner or Super Admin access.
+- Do not allow mixed-gender accommodation.
+- Do not delete booking history.
+- Do not expose sensitive customer documents.
+- Make all screens and buttons functional.
+- Ensure database-backed data retrieval.
+- Optimize application performance and image loading.
+- Use clean, reusable, maintainable code.
+
+**Start by inspecting my current project. Then implement the functionality in logical stages, run tests, fix errors and provide the final implementation report.**
+
+Important implementation notes:
+
+- Aadhaar: Offline Aadhaar verification and document access must follow UIDAI rules and applicable Indian law. The prompt intentionally avoids assuming that StayPass can directly validate Aadhaar online or freely expose full Aadhaar images to owners.
+- Google Authenticator: Owners should use Owner ID + password + authenticator code. The Owner ID alone must never grant access.
+- Super Admin: Your email is specified as the initial authorized administrator, but the account should be provisioned securely on the backend, not created through an unrestricted mobile registration screen.
+- SMS and email: Actual delivery requires configured providers and credentials. Google AI Studio should report missing configuration rather than simulate successful delivery.
+
+I can also help you split this into three implementation prompts—Frontend, Backend/Database/Docker, and Integration/Testing—so Google AI Studio can implement and debug each stage more reliably.

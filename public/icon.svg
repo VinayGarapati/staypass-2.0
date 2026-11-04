@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0052AC" />
+      <stop offset="100%" stop-color="#151C27" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#246BCE" />
+      <stop offset="100%" stop-color="#0052AC" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93F7BA" />
+      <stop offset="100%" stop-color="#198754" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Inner Decorative Ring -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#246BCE" stroke-opacity="0.25" stroke-width="4" stroke-dasharray="8 8" />
+
+  <!-- Main Card Graphic with Shadow -->
+  <g filter="url(#shadow)">
+    <!-- Bed Frame -->
+    <rect x="116" y="210" width="280" height="150" rx="20" fill="url(#accentGrad)" />
+    
+    <!-- Mattress / Pillow -->
+    <rect x="136" y="226" width="90" height="50" rx="12" fill="#FFFFFF" fill-opacity="0.95" />
+    <rect x="136" y="290" width="240" height="54" rx="10" fill="#EBF3FE" />
+    
+    <!-- Bed Headboard & Posts -->
+    <path d="M116 170 C116 160 124 152 134 152 L150 152 C160 152 168 160 168 170 L168 370 C168 376 163 380 157 380 L127 380 C121 380 116 376 116 370 Z" fill="#FFFFFF" />
+    <path d="M344 260 C344 250 352 242 362 242 L378 242 C388 242 396 250 396 260 L396 370 C396 376 391 380 385 380 L355 380 C349 380 344 376 344 370 Z" fill="#FFFFFF" />
+  </g>
+
+  <!-- Verified Pass Shield Overlay Badge -->
+  <g transform="translate(320, 110)" filter="url(#shadow)">
+    <circle cx="50" cy="50" r="48" fill="#151C27" stroke="#246BCE" stroke-width="3" />
+    <path d="M50 20 L76 30 C76 56 65 74 50 82 C35 74 24 56 24 30 Z" fill="url(#shieldGrad)" />
+    <!-- Checkmark inside Shield -->
+    <path d="M40 48 L47 55 L62 39" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="256" y="440" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" letter-spacing="4">STAYPASS</text>
+  <text x="256" y="468" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#93F7BA" letter-spacing="2">VERIFIED BEDS</text>
+</svg>

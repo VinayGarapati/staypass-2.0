@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "StayPass",
+    "slug": "staypass-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "staypass",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0052AC"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.staypass.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "StayPass needs camera access for KYC Aadhaar verification and property inspection photos.",
+        "NSPhotoLibraryUsageDescription": "StayPass requires photo access to upload PG photos and resident ID documents."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0052AC"
+      },
+      "package": "com.staypass.app",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
